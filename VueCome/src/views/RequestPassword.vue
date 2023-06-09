@@ -1,12 +1,12 @@
 
 <template>
    <GuestLayout title="Request New Password">
-        <form class="mt-8 space-y-6" action="#" method="POST">
+        <form class="mt-8 space-y-6" @submit="requestPassword">
           <input type="hidden" name="remember" value="true" />
           <div class="-space-y-px rounded-md shadow-sm">
             <div>
               <label for="email-address" class="sr-only">Email address</label>
-              <input id="email-address" name="email" type="email" autocomplete="email" required="" class="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Email address" />
+              <input v-model="email" id="email-address" name="email" type="email" required class="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Email address" />
             </div>
 
           </div>
@@ -35,6 +35,26 @@
   import { LockClosedIcon } from '@heroicons/vue/20/solid'
   import {useRoute, RouterLink} from 'vue-router'
   import GuestLayout from '../components/GuestLayout.vue';
+
+    import store from '../store';
+    import { ref } from 'vue';
+
+    const email = ref('')
+
+
+    function requestPassword(ev){
+        ev.preventDefault();
+        store.dispatch('requestPassword', email)
+        .then((res)=> {
+            router.push({
+                name: ''
+            })
+        })
+        .catch(error => {
+                errorMsg.value = error.response.data.message
+                msgError.value = error.response.data.error
+         })
+    }
 
   </script>
 

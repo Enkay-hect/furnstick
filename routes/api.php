@@ -1,6 +1,7 @@
  <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\forgotPassController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,8 +21,10 @@ Route::middleware('auth:sanctum')->group(function(){
         return $request->user();
     });
     Route::post('/logout', [AuthController::class, 'logout']);
-
 });
+
+// Auth::routes(['verify'=> true]);
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/requestPassword',[forgotPassController::class, 'storePassword'])->name('requestPassword');

@@ -35,7 +35,18 @@ const store = createStore({
                 commit('setUser', data);
                 return data
             })
+        },
+
+
+        requestPassword({commit}, email){
+            return axiosClient.post('/requestPassword', email)
+            .then(({data})=>{
+                commit('setUser', data);
+                return data
+            })
         }
+
+
     },
 
     mutations:{
