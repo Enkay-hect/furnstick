@@ -14,6 +14,7 @@ const store = createStore({
             data:{},
             token: sessionStorage.getItem('TOKEN'),
         },
+        
 
     },
 
@@ -38,11 +39,11 @@ const store = createStore({
         },
 
 
-        requestPassword({commit}, email){
-            return axiosClient.post('/requestPassword', email)
+        PasswordResetLink({commit}, email){
+            return axiosClient.post('/PasswordResetLink', email)
             .then(({data})=>{
                 commit('setUser', data);
-                return data
+                return data;
             })
         }
 
@@ -58,7 +59,7 @@ const store = createStore({
             state.user.token = userData.token;
             state.user.data = userData.user;
             sessionStorage.setItem('TOKEN', userData.token)
-        }
+        },
 
     },
 

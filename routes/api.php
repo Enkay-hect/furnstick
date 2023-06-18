@@ -1,7 +1,7 @@
  <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\forgotPassController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,4 +27,5 @@ Route::middleware('auth:sanctum')->group(function(){
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/requestPassword',[forgotPassController::class, 'storePassword'])->name('requestPassword');
+Route::post('/PasswordResetLink',[PasswordResetLinkController::class, 'create'])->name('create');
+Route::post('/PasswordResetLink',[PasswordResetLinkController::class, 'store'])->name('store');

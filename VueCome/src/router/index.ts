@@ -42,7 +42,9 @@ const router = createRouter({
     {
         path: '/ResetPassword/token',
         name: 'ResetPassword',
-        component: ResetPassword
+        component: ResetPassword,
+        meta: {requiresToken: true},
+
     },
   ]
 })
@@ -56,6 +58,10 @@ router.beforeEach((to, from, next)=>{
         next({name: 'Dashboard'})
     } else {
         next()
+    };
+
+    if (to.meta.requiresToken){
+        next({name: 'ResetPassowrd'});
     }
 } )
 
