@@ -2,45 +2,60 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
-
-use App\Models\User;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\UserVerify;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
-use Illuminate\Foundation\Auth\ResetsPasswords;
+
 
 class AuthController extends Controller
 {
-    public function register(Request $request){
-        $data = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|string|unique:users,email',
+
+
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
             'password' => [
                 'required',
                 'confirmed',
                 Password::min(8)->mixedCase()
-                //->numbers()->symbols()
-                //this will require number and symbol in the password...
-            ]
+            ],
+            'verification_code' => Str::random(64),
         ]);
 
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password'])
-        ]);
-
-        $token = $user->createToken('main')->plainTextToken;
-
-        return response([
-            'user'=> $user,
-            'token' => $token
-        ]);
+        $data = $request->all();
+        $verification_code = Str::random(64);
+        $createUser = $this->create($data, $verification_code);
     }
+
+
+
+        /**
+         * Write code on Method
+         *
+         * @return response()
+         */
+        public function create(array $data)
+        {
+            // $verification_code = Str::random(64);
+
+            return User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+                'verification_code' => bcrypt(Str::random(64)),
+            ]);
+        }
 
 
     public function login(Request $request)
@@ -72,6 +87,4 @@ class AuthController extends Controller
         ]);
 
     }
-
-
 }
