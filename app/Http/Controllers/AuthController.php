@@ -6,14 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use App\Models\UserVerify;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
-
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
-
 
     /**
      * Write code on Method
@@ -34,8 +32,8 @@ class AuthController extends Controller
         ]);
 
         $data = $request->all();
-        $verification_code = Str::random(64);
-        $createUser = $this->create($data, $verification_code);
+        $createUser = $this->create($data);
+
     }
 
 
@@ -53,8 +51,15 @@ class AuthController extends Controller
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => bcrypt($data['password']),
-                'verification_code' => bcrypt(Str::random(64)),
+                'verification_code' => bcrypt(Str::random(32)),
             ]);
+
+
+            Mail::send('mail.confirmEmail', $data,
+            function ($message) {
+                        $message->to('john@johndoe.com', 'John Doe');
+                        $message->subject('Click to Verify Email');
+            });
         }
 
 
@@ -71,15 +76,15 @@ class AuthController extends Controller
 
         if(!Auth::attempt($request->only(['email','password']), $request->get('remember'))){
             return response([
-                'error' => 'Invalid password',
+                'error' => 'Invalid credentials',
             ], 422);
 
         }
         $user = Auth::user();
 
-        // $user = Auth::loginUsingId(1);
 
         $token = $user->createToken('main')->plainTextToken;
+
 
         return response([
             'user'=> $user,
