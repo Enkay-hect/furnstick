@@ -1,14 +1,10 @@
  <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\GoogleAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 
-use App\Http\Controllers\Auth\VerifyEmailController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\EmailVerificationPromptController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +28,8 @@ Route::middleware('auth')->group(function(){
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
+Route::get('auth/google/call-back', [GoogleAuthController::class, 'callbackGoogle']);
+
 

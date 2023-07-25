@@ -44,9 +44,15 @@
                     </span> -->
                         <h4 class="">Already have an account? <router-link to="/login" class="text-indigo-400">Sign in</router-link></h4>
                     </div>
-                </div>
-            </form>
 
+                </div>
+
+                </form>
+                    <div>
+                        <button>
+                        <a href="http://localhost:8000/auth/google/call-back">Sign Up with Google</a>
+                        </button>
+                    </div>
         </GuestLayout>
     </div>
 

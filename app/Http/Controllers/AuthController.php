@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Mail;
 
+
 class AuthController extends Controller
 {
 
@@ -34,9 +35,14 @@ class AuthController extends Controller
         $data = $request->all();
         $createUser = $this->create($data);
 
+
+        // Mail::send('mail.confirm_email', $data=$request->only('email'),
+        // function ($message) {
+        //             $message->to('john@johndoe.com', 'John Doe');
+        //   hh          $message->subject('Click to Verify Email');
+        // });
+
     }
-
-
 
         /**
          * Write code on Method
@@ -53,15 +59,17 @@ class AuthController extends Controller
                 'password' => bcrypt($data['password']),
                 'verification_code' => bcrypt(Str::random(32)),
             ]);
-
-
-            Mail::send('mail.confirmEmail', $data,
-            function ($message) {
-                        $message->to('john@johndoe.com', 'John Doe');
-                        $message->subject('Click to Verify Email');
-            });
         }
 
+        // public static function sendRegisterEmail($name, $email, $verification_code){
+        //     $data = [
+        //         'name' => $name,
+        //         'verification_code' =>  $verification_code,
+        //     ];
+
+        //     Mail::to($email)->send(new RegisterEmail($data));
+        //     // Mail::to(users:)
+        // }
 
     public function login(Request $request)
     {
