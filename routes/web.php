@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\AuthController;
 
 
 /*
@@ -20,9 +21,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/confirm_email', function () {
-    return view('mail.confirm_email');
-});
+Route::get('account/verify/{token}', [AuthController::class, 'verifyAccount'])->name('user.verify');
+
+Route::get('/emailVerified',
+    function(){
+        return view('email.emailVerified');
+    }
+);
 
 Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
 Route::get('auth/google/call-back', [GoogleAuthController::class, 'callbackGoogle']);

@@ -9,13 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        // Schema::create('users_verify', function (Blueprint $table) {
-            // $table->integer('user_id');
-            // $table->string('verification_code');
-            // $table->timestamps();
-        // });
+        Schema::create('users_verify', function (Blueprint $table) {
+            $table->integer('user_id');
+            $table->string('token');
+            $table->timestamps();
+        });
 
 
     }
@@ -23,7 +23,9 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+
+
+    public function down()
     {
         Schema::dropIfExists('users_verify');
     }

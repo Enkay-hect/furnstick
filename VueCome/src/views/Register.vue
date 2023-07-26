@@ -48,24 +48,10 @@
                 </div>
 
                 </form>
-                    <div>
-                        <button>
-                        <a href="http://localhost:8000/auth/google/call-back">Sign Up with Google</a>
-                        </button>
-                    </div>
+
         </GuestLayout>
     </div>
 
-    <div>
-            <!-- <h1  v-clipboard>dammmmmm</h1>
-            <h3 v-clipboard="123456789">X</h3>
-            <textarea name="" id="" cols="30" rows="10" style="color:black"></textarea> -->
-
-            <!--    <h1>{{ sstore }}</h1>
-                    <h3 v-clipboard=abcde>X</h3>
-                    <textarea name="" id="" cols="30" rows="10" style="color:black"></textarea>
-            -->
-    </div>
 </template>
 
 <script setup lang="ts">
@@ -89,7 +75,7 @@ const user = {
     password_confirmation: '',
 };
 
-function register(ev){
+function register(ev: { preventDefault: () => void; }){
     ev.preventDefault();
     store
         .dispatch('register', user)
