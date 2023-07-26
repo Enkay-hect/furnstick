@@ -57,13 +57,9 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
 import GuestLayout from '../components/GuestLayout.vue';
-// import router from '../router';
 import store from '../store';
 import { ref } from 'vue';
 
-
-// const sstore = ref('123abcedf')
-// const abcde = sstore
 
 const router = useRouter();
 const errorMsg = ref('');

@@ -83,7 +83,7 @@
         remember: false,
     }
 
-    function login(ev){
+    function login(ev: { preventDefault: () => void; }){
         ev.preventDefault();
         store.dispatch('login', user)
         .then((res)=> {
