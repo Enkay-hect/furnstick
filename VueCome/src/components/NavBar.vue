@@ -17,6 +17,8 @@
 
             <a @click="logout()" :style="{cursor: 'pointer'}">Logout</a>
 
+            <router-link to="/updateprofile">Update Profile</router-link>
+
             <LD />
         </div>
 
@@ -31,7 +33,8 @@
 import LD from '../components/lightdark.vue'
 
 import {computed} from 'vue'
-import {useRouter, useRoute} from 'vue-router'
+import {RouterLink, useRouter, useRoute} from 'vue-router'
+
 import store from '../store';
 
 

@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function(){
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/PasswordReset', [AuthController::class, 'PasswordReset'])->name('PasswordReset');
 
 Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
 Route::get('auth/google/call-back', [GoogleAuthController::class, 'callbackGoogle']);

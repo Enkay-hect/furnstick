@@ -1,12 +1,12 @@
 
 <template>
    <GuestLayout title="Request New Password">
-        <form class="mt-8 space-y-6" @submit.prevent="PasswordResetLink">
+        <form class="mt-8 space-y-6" @submit.prevent="PasswordReset">
           <input type="hidden" name="remember" value="true" />
           <div class="-space-y-px rounded-md shadow-sm">
             <div>
               <label for="email-address" class="sr-only">Email address</label>
-              <input v-model="data.email" id="email-address" name="email" type="email" required class="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Email address" />
+              <input v-model="user.email" id="email-address" name="email" type="email" required class="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Email address" />
             </div>
 
           </div>
@@ -39,27 +39,24 @@
     import store from '../store';
     import { ref } from 'vue';
 
-    const data = {
+    const user = {
         email: "",
     }
-    const errorMsg = ref('')
 
 
-    function PasswordResetLink(ev){
+    function PasswordReset(ev){
         ev.preventDefault();
-        store.dispatch('PasswordResetLink', {email : data.email})
+        store.dispatch('PasswordReset', user)
         .then((res)=> {
             router.push({
                 name: ''
             })
         })
         .catch(error => {
-                errorMsg.value = error.response.data.message
-                msgError.value = error.response.data.error
+
          })
     }
 
-    console.log(errorMsg.value)
 
   </script>
 

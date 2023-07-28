@@ -38,8 +38,15 @@ const store = createStore({
             })
         },
 
+        PasswordReset({commit}, user){
+            return axiosClient.post('/PasswordReset', user)
+            .then(({data})=>{
+                return data
+            })
+        }
 
-     
+
+
 
 
     },

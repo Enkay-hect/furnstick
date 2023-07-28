@@ -29,6 +29,15 @@ Route::get('/emailVerified',
     }
 );
 
+Route::get('account/password_reset/{token}', [AuthController::class, 'PasswordReset'])->name('password.reset');
+
+
+Route::get('/passwordReset',
+    function(){
+        return view('email.passwordReset');
+    }
+);
+
 Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
 Route::get('auth/google/call-back', [GoogleAuthController::class, 'callbackGoogle']);
 

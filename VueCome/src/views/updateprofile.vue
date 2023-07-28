@@ -2,7 +2,7 @@
     <div>
         <GuestLayout title="Sign up to XYZ">
 
-            <form class="mt-8 space-y-6" @submit='register'>
+            <form class="mt-8 space-y-6" @submit=''>
                 <div v-if="errorMsg" :style="{color: 'red'}">
                     {{ errorMsg }}
                 </div>
@@ -81,8 +81,8 @@ function register(ev: { preventDefault: () => void; }){
                 name: 'Dashboard'
             })
     })
-     .catch(errors=> {
-            errorMsg.value = errors.res.data.message
+     .catch(err=> {
+            errorMsg.value = err.res.data.message
         })
 }
 

@@ -61,20 +61,17 @@
   </template>
 
   <script setup lang="ts">
+
     import { LockClosedIcon } from '@heroicons/vue/20/solid'
     import {RouterLink, useRouter} from 'vue-router'
     import GuestLayout from '../components/GuestLayout.vue';
     import store from '../store';
-    import { ref } from 'vue';
-
-    const space = " "
+    import { ref, computed } from 'vue';
 
     const router = useRouter()
 
     let errorMsg = ref('');
     let msgError = ref('');
-    let y = ref('')
-    let mytext = ref('')
 
 
     const user ={
@@ -83,18 +80,26 @@
         remember: false,
     }
 
+ /* const is_verified = computed(()=>{
+    //@ts-ignore
+        return store.state.user.data.is_verified;
+    })
+
+    console.log(is_verified.value)*/
+
+
+
+
+
     function login(ev: { preventDefault: () => void; }){
         ev.preventDefault();
         store.dispatch('login', user)
         .then((res)=> {
-            router.push({
-                name: 'Dashboard'
+                router.push({
+                    name: ' '
             })
         })
-        .catch(error => {
-                errorMsg.value = error.response.data.message
-                msgError.value = error.response.data.error
-         })
+
     }
 
 
