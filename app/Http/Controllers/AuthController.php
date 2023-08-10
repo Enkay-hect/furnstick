@@ -14,6 +14,7 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Mail;
 use PhpParser\Node\Expr\Cast\Object_;
 
+
 class AuthController extends Controller
 {
 
@@ -42,7 +43,7 @@ class AuthController extends Controller
 
         UserVerify::create([
             'user_id' => $createUser->id,
-            'token' => $token
+            'token' => $token,
         ]);
 
         // ->where('created_at', '<=', now()->subMinutes(30)->toDateTimeString())
@@ -83,6 +84,7 @@ class AuthController extends Controller
 
         $message = 'Sorry your email cannot be identified';
 
+
         if(!is_null($verifyUser)){
             $user = $verifyUser->user;
 
@@ -90,13 +92,10 @@ class AuthController extends Controller
                 $verifyUser->user->email_verified_at = Carbon::now();
                 $verifyUser->user->is_verified = 1;
                 $verifyUser->user->save();
-               // $message = "Your e-mail is verified. You can now login.";
             }
-            // else{
-            //     $message = "Your e-mail is already verified. You can now login.";
-            // }
-        }
 
+            }
+        UserVerify::where(['user_id'=> $verifyUser->user->id])->delete();
         return redirect('emailVerified')->with('message', $message);
 
      }
@@ -126,17 +125,10 @@ class AuthController extends Controller
 
             }
 
-
-            // else if(User::where('email_verified_at', $email_verified_at)->first() !== 1){
-            //     return response([
-            //         'error' => 'User not verified',
-            //     ], 422);
-            // }
-
-
             if(User::where('email_verified_at', $email_verified_at)->first()){
                 $user = Auth::user();
             }
+
 
         $user = Auth::user();
 
@@ -147,7 +139,6 @@ class AuthController extends Controller
         return response([
             'user'=> $user,
             'token' => $token,
-            //'is_verified' => $user->is_verified,
         ]);
 
     }

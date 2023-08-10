@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('users_verify', function (Blueprint $table) {
             $table->integer('user_id');
             $table->string('token');
+            $table->integer('verified')->default(0);
             $table->timestamps();
         });
 
