@@ -14,8 +14,6 @@ const store = createStore({
             data:{},
             token: sessionStorage.getItem('TOKEN'),
         },
-
-
     },
 
     getters: {},

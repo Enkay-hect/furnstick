@@ -45,6 +45,9 @@ class AuthController extends Controller
             'token' => $token
         ]);
 
+        // ->where('created_at', '<=', now()->subMinutes(30)->toDateTimeString())
+        // ->delete();
+
         Mail::send('email.emailVerification', ['token' => $token], function($message) use($request){
             $message->to($request->email);
             $message->subject('Email Verification Mail');
@@ -101,6 +104,10 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+
+        $email_verified_at = $request->only('email_verified_at');
+
+
         $request->validate([
             'email' => 'required|email|string|exists:users',
             'password' => [
@@ -110,15 +117,28 @@ class AuthController extends Controller
         ]);
 
 
-        if (!Auth::attempt($request->only(['email','password']),
-                $request->get('remember'))){
+        if (!Auth::attempt($request->only(['email','password', ]),
+                $request->get('remember')))
+            {
                 return response([
                     'error' => 'Invalid credentials',
                 ], 422);
 
-        }
-        $user = Auth::user();
+            }
 
+
+            // else if(User::where('email_verified_at', $email_verified_at)->first() !== 1){
+            //     return response([
+            //         'error' => 'User not verified',
+            //     ], 422);
+            // }
+
+
+            if(User::where('email_verified_at', $email_verified_at)->first()){
+                $user = Auth::user();
+            }
+
+        $user = Auth::user();
 
          /** @var \App\Models\MyUserModel $user **/
         $token = $user->createToken('main')->plainTextToken;
@@ -126,7 +146,8 @@ class AuthController extends Controller
 
         return response([
             'user'=> $user,
-            'token' => $token
+            'token' => $token,
+            //'is_verified' => $user->is_verified,
         ]);
 
     }

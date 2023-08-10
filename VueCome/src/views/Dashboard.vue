@@ -1,16 +1,14 @@
 <template>
-    <!-- <div v-if="is_verified == 2">adsfasdf</div> -->
-    <!-- <div v-else><h3>Go and sign up</h3></div> -->
+    <div v-if="is_verified == 0">
+        <h2>Go and Verify please <a @click="logout()" :style="{cursor: 'pointer'}"> Login</a></h2>
+    </div>
 
-
-
-    <div >
+    <div v-else>
         <NavBar>
         </NavBar>
     </div>
 
     <div>
-    <!-- {{ is_verified }} -->
     </div>
 
 </template>
@@ -19,14 +17,23 @@
     import NavBar from '../components/NavBar.vue'
     import store from '../store'
 
-    import {computed} from 'vue'
+    import {computed, ref} from 'vue'
+    import {RouterLink, useRouter, useRoute} from 'vue-router'
 
 
-    const verified = computed(()=>{
-        return store.state.user.data.is_verified
-    })
+    let is_verified = ref()
 
-    let is_verified = verified.value
+
+    is_verified = store.state.user.data.is_verified
+    const router = useRouter();
+
+        function logout(){
+            store.commit("logout");
+            router.push({
+                name: 'login',
+            });
+        }
+
 
 
 

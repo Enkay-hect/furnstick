@@ -44,9 +44,12 @@ const username = computed(()=>{
     const splitFullname = username.value.split(' ');
     const firstName = splitFullname[0];
 
+    console.log(store.state.user.data.name)
+
 
 
     const router = useRouter();
+
 
     function logout(){
         store.commit("logout");

@@ -1,9 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from "../views/Login.vue"
+//@ts-ignore
 import Dashboard from "../views/Dashboard.vue"
+//@ts-ignore
 import RequestPassword from '../views/RequestPassword.vue'
 import ResetPassword from '../views/ResetPassword.vue'
 import Register from '../views/Register.vue'
+//@ts-ignore
 import Products from '../views/Products.vue'
 // import GuestLayout from '../components/GuestLayout.vue'
 import store from '../store'
@@ -60,10 +63,6 @@ router.beforeEach((to, from, next)=>{
     } else {
         next()
     };
-
-    if (to.meta.requiresToken){
-        next({name: 'ResetPassowrd'});
-    }
 } )
 
 export default router

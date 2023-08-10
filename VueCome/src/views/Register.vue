@@ -48,7 +48,8 @@
                 </div>
 
                 </form>
-
+                    <div>
+                    </div>
         </GuestLayout>
     </div>
 
@@ -77,13 +78,10 @@ function register(ev: { preventDefault: () => void; }){
         .dispatch('register', user)
         .then((res)=> {
             router.push({
-
-                name: 'Dashboard'
+                name: 'login'
             })
     })
-     .catch(errors=> {
-            errorMsg.value = errors.res.data.message
-        })
+
 }
 
 

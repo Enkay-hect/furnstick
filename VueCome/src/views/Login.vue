@@ -96,7 +96,7 @@
         store.dispatch('login', user)
         .then((res)=> {
                 router.push({
-                    name: ' '
+                    name: 'Dashboard'
             })
         })
 

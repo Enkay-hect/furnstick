@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class isVerifyEmail
@@ -19,7 +20,7 @@ class isVerifyEmail
     public function handle(Request $request, Closure $next)
     {
 
-        if (!uth::user()->is_email_verified) {
+        if (!Auth::user()->is_email_verified) {
             auth()->logout();
             return redirect()->route('login')
                     ->with('message', 'You need to confirm your account. We have sent you an activation code, please check your email.');
